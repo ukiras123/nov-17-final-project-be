@@ -4,8 +4,7 @@ const { message: { ERROR } } = require('../utils/const');
 const adminRegistrationValidation = (req, res, next) => {
   try {
     console.log('adminRegistrationValidation');
-    // If req.body is valid then next if not throw error
-    // JOI Schema definition
+
     const schema = Joi.object({
       fName: Joi.string().min(3).max(20).required(),
       lName: Joi.string().min(3).max(20).required(),
