@@ -23,6 +23,7 @@ const adminRegistrationValidation = (req, res, next) => {
         message: error.message,
       });
     } else {
+      console.log('Validation passed');
       next();
     }
   } catch (e) {
