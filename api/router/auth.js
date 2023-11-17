@@ -1,5 +1,7 @@
 const express = require('express');
 const { message: { SUCCESS } } = require('../utils/const');
+const { registerUser } = require('../controller/authController');
+const { adminRegistrationValidation } = require('../middleware/joiValidation');
 
 const authRouter = express.Router();
 
@@ -28,16 +30,7 @@ authRouter.get('/logout', (req, res, next) => {
 });
 
 // admin registration
-authRouter.post('/admin-registration', (req, res, next) => {
-  try {
-    res.json({
-      status: SUCCESS,
-      message: 'Admin Registration Success',
-    });
-  } catch (e) {
-    next(e);
-  }
-});
+authRouter.post('/admin-registration', adminRegistrationValidation, registerUser);
 
 // Reset Password
 authRouter.post('/reset-password', (req, res) => {
