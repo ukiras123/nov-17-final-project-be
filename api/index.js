@@ -2,9 +2,11 @@
 const express = require('express');
 require('dotenv').config();
 const cors = require('cors');
+// eslint-disable-next-line import/no-extraneous-dependencies
 const morgan = require('morgan');
 const { authRouter } = require('./router/auth');
 const { message: { ERROR } } = require('./utils/const');
+const dbConnect = require('./config/mongoConfig');
 
 const app = express();
 
@@ -31,6 +33,11 @@ app.use((err, req, res, _next) => {
   });
 });
 
-app.listen(PORT, (error) => (error
-  ? console.log(error)
-  : console.log(`Server is running at http://localhost:${PORT}`)));
+dbConnect.then(() => {
+  console.log('DB Connected successfully');
+  app.listen(PORT, (error) => (error
+    ? console.log(error)
+    : console.log(`Server is running at http://localhost:${PORT}`)));
+}).catch((e) => {
+  console.log('Error', e);
+});
