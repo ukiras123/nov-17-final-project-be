@@ -1,9 +1,10 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 const { v4: uuidv4 } = require('uuid');
 const { message: { SUCCESS }, message, FE_URL } = require('../utils/const');
-const { hashPassword } = require('../helper/bcrypt');
+const { hashPassword, comparePassword } = require('../helper/bcrypt');
 const { createAdmin, updateAdmin, getUser } = require('../model/user/UserModel');
 const { sendAccountActivationEmail, sendAccountActivatedNotificationEmail } = require('../helper/nodemailer');
+const { createAccessJWT, createRefreshJWT } = require('../helper/jwt');
 
 const registerUser = async (req, res, next) => {
   try {
@@ -56,7 +57,38 @@ const verifyUser = async (req, res, next) => {
     next(e);
   }
 };
+
+const loginUser = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+
+    const user = await getUser({ email });
+    if (user?._id) {
+      const isPassValid = comparePassword(password, user?.password);
+      if (isPassValid) {
+        // generate JWT Tokens and send it back
+        const accessJWT = await createAccessJWT({ email });
+        const refreshJWT = await createRefreshJWT({ email });
+        return res.json({
+          status: SUCCESS,
+          message: 'Login Success',
+          token: {
+            accessJWT,
+            refreshJWT,
+          },
+        });
+      }
+    }
+    res.code(403).json({
+      status: message.ERROR,
+      message: 'Invalid Login Detail',
+    });
+  } catch (e) {
+    next(e);
+  }
+};
 module.exports = {
   registerUser,
   verifyUser,
+  loginUser,
 };

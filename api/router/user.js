@@ -1,21 +1,16 @@
 const express = require('express');
 const { message: { SUCCESS } } = require('../utils/const');
-const { registerUser, verifyUser } = require('../controller/userController');
-const { adminRegistrationValidation, accountVerificationValidation } = require('../middleware/joiValidation');
+const { registerUser, verifyUser, loginUser } = require('../controller/userController');
+const { adminRegistrationValidation, accountVerificationValidation, loginValidation } = require('../middleware/joiValidation');
 
 const userRouter = express.Router();
 
+// admin registration
+userRouter.post('/registration', adminRegistrationValidation, registerUser);
+userRouter.post('/account-verification', accountVerificationValidation, verifyUser);
+
 // Login
-userRouter.post('/login', (req, res, next) => {
-  try {
-    res.json({
-      status: SUCCESS,
-      message: 'Logout Success',
-    });
-  } catch (e) {
-    next(e);
-  }
-});
+userRouter.post('/login', loginValidation, loginUser);
 
 // logout
 userRouter.get('/logout', (req, res, next) => {
@@ -28,11 +23,6 @@ userRouter.get('/logout', (req, res, next) => {
     next(e);
   }
 });
-
-// admin registration
-userRouter.post('/registration', adminRegistrationValidation, registerUser);
-
-userRouter.post('/account-verification', accountVerificationValidation, verifyUser);
 
 // Reset Password
 userRouter.post('/reset-password', (req, res) => {
