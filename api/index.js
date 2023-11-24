@@ -4,7 +4,7 @@ require('dotenv').config();
 const cors = require('cors');
 // eslint-disable-next-line import/no-extraneous-dependencies
 const morgan = require('morgan');
-const { authRouter } = require('./router/auth');
+const { userRouter } = require('./router/user');
 const { message: { ERROR } } = require('./utils/const');
 const dbConnect = require('./config/mongoConfig');
 
@@ -24,7 +24,7 @@ app.get('/', (req, res) => {
   });
 });
 
-app.use('/api/v1/auth', authRouter);
+app.use('/api/v1/admin', userRouter);
 
 app.use((err, req, res, _next) => {
   res.status(500).json({
