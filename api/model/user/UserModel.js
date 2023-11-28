@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
+  status: {
+    type: String,
+    require: true,
+    default: 'inactive',
+  },
   fName: {
     type: String,
     required: true,

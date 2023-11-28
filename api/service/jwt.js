@@ -14,15 +14,20 @@ const createAccessJWT = async (userInfo) => {
   return token;
 };
 
+const verifyAccessJWT = (token) => jwt.verify(token, JWT_ACCESS_SECRET);
+const verifyRefreshJWT = (token) => jwt.verify(token, JWT_REFRESH_SECRET);
+
 const createRefreshJWT = async (userInfo) => {
   const token = jwt.sign(userInfo, JWT_REFRESH_SECRET, { expiresIn: '30d' });
   //   Save this token in db before returning it
   //    save it in user collection
-  await updateAdmin({ email: userInfo.email }, { refreshToken: token });
+  await updateAdmin({ email: userInfo.email }, { refreshJWT: token });
   return token;
 };
 
 module.exports = {
   createAccessJWT,
   createRefreshJWT,
+  verifyAccessJWT,
+  verifyRefreshJWT,
 };

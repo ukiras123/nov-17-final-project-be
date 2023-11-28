@@ -1,10 +1,11 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 const { v4: uuidv4 } = require('uuid');
 const { message: { SUCCESS }, message, FE_URL } = require('../utils/const');
-const { hashPassword, comparePassword } = require('../helper/bcrypt');
+const { hashPassword, comparePassword } = require('../service/bcrypt');
 const { createAdmin, updateAdmin, getUser } = require('../model/user/UserModel');
-const { sendAccountActivationEmail, sendAccountActivatedNotificationEmail } = require('../helper/nodemailer');
-const { createAccessJWT, createRefreshJWT } = require('../helper/jwt');
+const { sendAccountActivationEmail, sendAccountActivatedNotificationEmail } = require('../service/nodemailer');
+const { createAccessJWT, createRefreshJWT } = require('../service/jwt');
+const { deleteSession } = require('../model/session/SessionModel');
 
 const registerUser = async (req, res, next) => {
   try {
@@ -38,6 +39,7 @@ const verifyUser = async (req, res, next) => {
     }, {
       isVerified: true,
       verificationCode: '',
+      status: 'active',
     });
     if (response?._id) {
       // send act verification email
@@ -63,6 +65,13 @@ const loginUser = async (req, res, next) => {
     const { email, password } = req.body;
 
     const user = await getUser({ email });
+    // check if a user is active/inactive
+    if (user?.status === 'inactive') {
+      return res.status(403).json({
+        status: message.ERROR,
+        message: 'User Account deactivated',
+      });
+    }
     if (user?._id) {
       const isPassValid = comparePassword(password, user?.password);
       if (isPassValid) {
@@ -79,9 +88,40 @@ const loginUser = async (req, res, next) => {
         });
       }
     }
-    res.code(403).json({
+    res.status(403).json({
       status: message.ERROR,
       message: 'Invalid Login Detail',
+    });
+  } catch (e) {
+    next(e);
+  }
+};
+
+const getAdminInfo = (req, res, next) => {
+  try {
+    res.json({
+      status: SUCCESS,
+      user: req.userInfo,
+    });
+  } catch (e) {
+    next(e);
+  }
+};
+
+const logOutUser = async (req, res, next) => {
+  try {
+    const { accessJWT, refreshJWT } = req.body;
+    console.log('accessJWT', accessJWT);
+    console.log('refreshJWT', accessJWT);
+    // remove accessJWT from session model
+    await deleteSession(accessJWT);
+    // remove refreshJWT from user model
+    await updateAdmin({ refreshJWT }, {
+      refreshJWT: '',
+    });
+    res.json({
+      status: SUCCESS,
+      message: 'Logout Success',
     });
   } catch (e) {
     next(e);
@@ -91,4 +131,6 @@ module.exports = {
   registerUser,
   verifyUser,
   loginUser,
+  getAdminInfo,
+  logOutUser,
 };
