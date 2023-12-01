@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const { message: { ERROR } } = require('../utils/const');
+const { message: { ERROR } } = require('../../utils/const');
 
 const adminRegistrationValidation = (req, res, next) => {
   try {

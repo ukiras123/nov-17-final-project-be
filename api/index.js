@@ -7,6 +7,8 @@ const morgan = require('morgan');
 const { userRouter } = require('./router/user');
 const { message: { ERROR } } = require('./utils/const');
 const dbConnect = require('./config/mongoConfig');
+const { categoryRouter } = require('./router/category');
+const { auth } = require('./middleware/authMiddleware');
 
 const app = express();
 
@@ -25,9 +27,37 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/v1/admin', userRouter);
+// category
+app.use('/api/v1/category', auth, categoryRouter);
+// CRUD
+// JOI Validation
+// Auth Middleware
+
+// Product
+// paymentOption
+
+// app.use((req, res, _next) => {
+//   console.log('I am ABC');
+//   _next();
+// });
+
+// app.use((req, res, _next) => {
+//   console.log('I am DCF');
+//   _next(new Error('Errro'));
+// });
+
+// app.use((err, req, res, _next) => {
+//   console.log('I am ERROR');
+//   res.status(500).json({
+//     status: ERROR,
+//     message: err.message,
+//   });
+// });
 
 app.use((err, req, res, _next) => {
-  res.status(500).json({
+  console.log('I am ERROR2');
+  const code = err?.statusCode || 500;
+  res.status(code).json({
     status: ERROR,
     message: err.message,
   });
