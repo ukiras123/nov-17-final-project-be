@@ -9,6 +9,7 @@ const { message: { ERROR } } = require('./utils/const');
 const dbConnect = require('./config/mongoConfig');
 const { categoryRouter } = require('./router/category');
 const { auth } = require('./middleware/authMiddleware');
+const { productRouter } = require('./router/product');
 
 const app = express();
 
@@ -29,6 +30,8 @@ app.get('/', (req, res) => {
 app.use('/api/v1/admin', userRouter);
 // category
 app.use('/api/v1/category', auth, categoryRouter);
+app.use('/api/v1/product', auth, productRouter);
+
 // CRUD
 // JOI Validation
 // Auth Middleware
