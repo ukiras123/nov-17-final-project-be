@@ -19,7 +19,7 @@ const registerUser = async (req, res, next) => {
     const verificationCode = uuidv4();
     req.body.verificationCode = verificationCode;
     await createAdmin(req.body);
-    const link = `${FE_URL}/admin-verification?c=${verificationCode}&e=${email}`;
+    const link = `${FE_URL}/admin-verification?c=${verificationCode}&e=${encodeURIComponent(email)}`;
     await sendAccountActivationEmail({ link, fName, email });
     res.json({
       status: SUCCESS,
@@ -36,7 +36,6 @@ const registerUser = async (req, res, next) => {
 const verifyUser = async (req, res, next) => {
   try {
     const { e, c } = req.body;
-
     const response = await updateAdmin({
       email: e,
       verificationCode: c,

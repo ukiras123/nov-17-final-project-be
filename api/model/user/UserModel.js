@@ -6,6 +6,10 @@ const userSchema = new mongoose.Schema({
     require: true,
     default: 'inactive',
   },
+  role: {
+    type: String,
+    require: true,
+  },
   fName: {
     type: String,
     required: true,

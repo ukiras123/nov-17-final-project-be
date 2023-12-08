@@ -7,7 +7,7 @@ const JWT_ACCESS_SECRET = '1234erfsafd425sfdass';
 const JWT_REFRESH_SECRET = 'ds3443erfgr[po';
 
 const createAccessJWT = async (userInfo) => {
-  const token = jwt.sign(userInfo, JWT_ACCESS_SECRET, { expiresIn: '15m' });
+  const token = jwt.sign(userInfo, JWT_ACCESS_SECRET, { expiresIn: '5s' });
   //   Save this token in db before returning it
   //   Save it in session collection
   await createSession({ accessToken: token, associate: userInfo.email });

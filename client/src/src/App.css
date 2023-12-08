@@ -1,0 +1,24 @@
+.main {
+  min-height: calc(100vh - 170px);
+  margin-left: 1rem;
+}
+
+.register {
+  max-width: 450px;
+  margin: auto;
+}
+
+.active {
+  background: green;
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 5px;
+  text-transform: capitalize;
+}
+.inactive {
+  background: red;
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 5px;
+  text-transform: capitalize;
+}
