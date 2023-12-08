@@ -9,11 +9,13 @@ const { message: { SUCCESS }, message } = require('../utils/const');
 
 const createProductController = async (req, res, next) => {
     try {
+        console.log(req.files);
         const obj = { ...req.body };
         obj.slug = slugify(obj.title, {
             trim: true,
             lower: true,
         });
+        obj.images = req.files.map((file) => file.path);
         const product = await createProduct(obj);
         res.json({
             status: SUCCESS,

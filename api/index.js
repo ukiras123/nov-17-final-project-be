@@ -4,6 +4,7 @@ require('dotenv').config();
 const cors = require('cors');
 // eslint-disable-next-line import/no-extraneous-dependencies
 const morgan = require('morgan');
+const path = require('path');
 const { userRouter } = require('./router/user');
 const { message: { ERROR } } = require('./utils/const');
 const dbConnect = require('./config/mongoConfig');
@@ -14,11 +15,14 @@ const { productRouter } = require('./router/product');
 const app = express();
 
 const PORT = process.env.PORT || 3000;
+const staticFilesDirectory = path.join(__dirname, 'public'); // Change 'public' to your desired directory name
 
 // Basic Middleware
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(morgan('combined'));
+app.use(express.static(staticFilesDirectory));
 
 app.get('/', (req, res) => {
   res.json({
