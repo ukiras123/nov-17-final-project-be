@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Button, ButtonGroup, Col, Form, Row } from "react-bootstrap";
 import { CustomInput } from "../custom-input/CustomInput";
 import { useDispatch, useSelector } from "react-redux";
-import { addCategoryAction, deleteCat } from "../../pages/category/catAction";
+import { addCategoryAction, deleteCat, updateCategoryAction } from "../../pages/category/catAction";
 import slugify from "slugify";
+import { apiUpdateCategoryAction } from "../../helper/axios";
 
 export const EditCatForm = () => {
   const dispatch = useDispatch();
@@ -18,7 +19,7 @@ export const EditCatForm = () => {
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    dispatch(addCategoryAction(form));
+    dispatch(updateCategoryAction(selectedCat._id, form));
   };
 
   const handleOnChange = (e) => {
@@ -60,10 +61,10 @@ export const EditCatForm = () => {
           <Col md="5">
             <Form.Group className="mb-3">
               <Form.Control
-                name="name"
+                name="title"
                 type="text"
                 required
-                value={form.name}
+                value={form.title}
                 onChange={handleOnChange}
               />
               <Form.Label>{`Slug: ${form.slug}`}</Form.Label>

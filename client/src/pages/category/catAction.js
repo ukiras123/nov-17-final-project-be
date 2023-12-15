@@ -11,24 +11,34 @@ import { TBL_CATEGOR } from "../../utils/constant";
 import { db } from "../../config/firebase-config";
 import { setCatList } from "./catSlice";
 import { setModalShow } from "../../system-state/systemSlice";
-import { apiGetCategories } from "../../helper/axios";
+import { apiCreateCategory, apiGetCategories, apiUpdateCategoryAction } from "../../helper/axios";
 
 export const addCategoryAction =
-  ({ slug, ...rest }) =>
+  (id, data) =>
     async (dispatch) => {
       try {
-        const pending = setDoc(doc(db, TBL_CATEGOR, slug), rest, { merge: true });
-        toast.promise(pending, {
-          pending: "please wait",
-          success: "Category database has been upadated",
-          error: "Unable to process your request, Pelase try again later",
-        });
+        const { result, status, message } = await apiCreateCategory(id, data);
+
         dispatch(fetchAllCategoryAction());
         dispatch(setModalShow(false));
       } catch (error) {
         toast.error(error.message);
       }
     };
+
+export const updateCategoryAction =
+  (id,data) =>
+    async (dispatch) => {
+      try {
+        const { result, status, message } = await apiUpdateCategoryAction(id,data);
+
+        dispatch(fetchAllCategoryAction());
+        dispatch(setModalShow(false));
+      } catch (error) {
+        toast.error(error.message);
+      }
+    };
+
 
 export const fetchAllCategoryAction = () => async (dispatch) => {
   try {

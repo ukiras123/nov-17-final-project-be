@@ -10,7 +10,7 @@ const Category = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchAllCategoryAction());
-  });
+  }, [dispatch]);
   return (
     <AdminLayout pageTitle="Category">
       <NewCatForm />

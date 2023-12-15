@@ -13,8 +13,7 @@ export const NewCatForm = () => {
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    const slug = slugify(form.name, { lower: true, trim: true });
-    dispatch(addCategoryAction({ ...form, slug }));
+    dispatch(addCategoryAction(form));
   };
 
   const handleOnChange = (e) => {
@@ -49,9 +48,8 @@ export const NewCatForm = () => {
           <Col md="5">
             <Form.Group className="mb-3">
               <Form.Control
-                name="name"
+                name="title"
                 type="text"
-                label=""
                 required
                 onChange={handleOnChange}
               />

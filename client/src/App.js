@@ -30,10 +30,10 @@ function App() {
 
   //fetch anything you need in the multipl places of the app
   useEffect(() => {
-    dispatch(fetchAllCategoryAction());
-    dispatch(fetchAllProductAction());
 
-  });
+    // dispatch(fetchAllCategoryAction());
+    // dispatch(fetchAllProductAction());
+  }, []);
   return (
     <div className="">
       <Routes>

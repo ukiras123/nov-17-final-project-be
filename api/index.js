@@ -62,7 +62,7 @@ app.use('/api/v1/product', auth, productRouter);
 // });
 
 app.use((err, req, res, _next) => {
-  console.log('I am ERROR2');
+  console.log('Error---->', err);
   const code = err?.statusCode || 500;
   res.status(code).json({
     status: ERROR,

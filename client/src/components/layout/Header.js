@@ -5,32 +5,28 @@ import { Link } from "react-router-dom";
 import { AiFillDashboard } from "react-icons/ai";
 import { ImExit } from "react-icons/im";
 import { TbLogin } from "react-icons/tb";
-import { signOut } from "firebase/auth";
-import { auth } from "../../config/firebase-config";
 import { useDispatch, useSelector } from "react-redux";
-import { setUser } from "../../pages/registration-login/userSlice";
+import { apiLogoutUser } from "../../helper/axios";
+
 const Header = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.adminInfo);
 
   const handleOnLogout = () => {
-    signOut(auth).then(() => {
-      console.log("you have been loged out");
-      // reset user state
-      dispatch(setUser({}));
-    });
+    console.log("Loggin out")
+    dispatch(apiLogoutUser())
   };
   return (
     <Navbar bg="dark" variant="dark" expand="md">
       <Container>
-        <Navbar.Brand href="/">CTS</Navbar.Brand>
+        <Navbar.Brand href="/">CTSD</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-            {user?.uid ? (
+            {user?._id ? (
               <>
                 <Link className="nav-link" to="/dashboard" title="Dashboard">
-                  <AiFillDashboard />
+                  <AiFillDashboard /> Dash
                 </Link>
                 <Link
                   className="nav-link"
@@ -38,12 +34,12 @@ const Header = () => {
                   title="Logout"
                   onClick={handleOnLogout}
                 >
-                  <ImExit />
+                  <ImExit /> Logout
                 </Link>
               </>
             ) : (
               <Link className="nav-link" to="/" title="Login">
-                <TbLogin />
+                <TbLogin /> Login
               </Link>
             )}
           </Nav>

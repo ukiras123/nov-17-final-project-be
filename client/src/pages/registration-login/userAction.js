@@ -48,7 +48,7 @@ export const loginAdminUser =
         toast[status](message);
         if (status === 'success') {
           // We will get token, what to do with it?
-          sessionStorage.setItem("accessJWT", token.accessJWT)
+          localStorage.setItem("accessJWT", token.accessJWT)
           localStorage.setItem("refreshJWT", token.refreshJWT)
 
           dispatch(getAdminUserInfo())
