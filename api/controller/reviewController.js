@@ -3,14 +3,7 @@ const { message } = require('../utils/const');
 
 const createReviewController = async (req, res, next) => {
   try {
-    // const { rating, comment } = req.body;
-
-    // const ratingObj=
-    // const userId = getUser();
-
-    // user id can be send from redux or client using toolkit or logged in session i guess
-
-    console.log({ ...req.body });
+    // console.log({ ...req.body });
 
     await createReview({ ...req.body });
     res.json({

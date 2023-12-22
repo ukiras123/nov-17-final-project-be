@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 // eslint-disable-next-line import/no-extraneous-dependencies
 const { v4: uuidv4 } = require('uuid');
 const { message: { SUCCESS, ERROR }, message, FE_URL } = require('../utils/const');

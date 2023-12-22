@@ -13,9 +13,14 @@ const reviewSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
-  user: {
+  userID: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    ref: 'user',
+    required: true,
+  },
+  productID: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'product',
     required: true,
   },
 
