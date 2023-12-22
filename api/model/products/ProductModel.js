@@ -1,5 +1,8 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable indent */
+
 const mongoose = require('mongoose');
+const moment = require('moment');
 
 const productSchema = new mongoose.Schema({
     status: {
@@ -7,10 +10,15 @@ const productSchema = new mongoose.Schema({
         required: true,
         default: 'Available',
     },
-    slug: {
+    SKU: {
         type: String,
         required: true,
-        unique: true,
+        // unique: true,
+    },
+
+    categoryTitle: {
+        type: String,
+        required: true,
     },
     title: {
         type: String,
@@ -19,6 +27,18 @@ const productSchema = new mongoose.Schema({
     price: {
         type: String,
         required: true,
+    },
+    salePrice: {
+        type: String,
+    },
+    SaleStart: {
+        type: Date,
+        set: (v) => moment(v, 'DD/MM/YYYY').toDate(),
+    },
+
+    salesEnd: {
+        type: Date,
+        set: (v) => moment(v, 'DD/MM/YYYY').toDate(),
     },
     images: {
         type: Array,
