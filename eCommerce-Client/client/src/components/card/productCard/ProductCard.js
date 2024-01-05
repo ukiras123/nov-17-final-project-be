@@ -2,13 +2,13 @@ import React from "react";
 import CardBtn from "../../Button/CardBtn";
 import { getFileURL } from "../../../utility";
 
-const ProductCard = ({ thumbnail, title, description, salePrice, Price }) => {
+const ProductCard = ({ thumbnail, title, description, salesPrice, price }) => {
   return (
     <div>
       <div className='card bg-slate-50 w-[280px] h-[350px] m-1 rounded-lg  shadow-2xl'>
         <div className='top'>
           <img
-            className='w-[280px] h-[200px] object-fit rounded-t'
+            className='w-[280px] object-fit rounded-t'
             src={getFileURL(thumbnail)}
             alt='img'
           />
@@ -20,13 +20,12 @@ const ProductCard = ({ thumbnail, title, description, salePrice, Price }) => {
           <div className='category text-xs font-light my-1'>{description}</div>
 
           <div className='pricing flex items-center'>
-            <div className='price '>{salePrice}</div>
+            <div className='price '>${salesPrice}</div>
             <div className='ml-2 text-xs '>
-              $<del>{Price}</del>
+              $<del>{price}</del>
             </div>
           </div>
           <div className='flex items-center my-2'>
-            <CardBtn>Buy Now</CardBtn>
             <CardBtn>Add to Cart</CardBtn>
           </div>
         </div>

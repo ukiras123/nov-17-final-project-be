@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
@@ -9,8 +10,16 @@ import Login from "./components/user/Login";
 import Category from "./pages/category/Category";
 import { SideBarWithNav } from "./components/Layout/navBar/SideBarWithNav";
 import Product from "./pages/product/Product";
+import { useDispatch } from "react-redux";
+import { fetchAllProduct } from "./pages/product/ProductAction";
+import { fetchAllCategories } from "./pages/category/CatAction";
 
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchAllProduct())
+    dispatch(fetchAllCategories())
+  }, [])
   return (
     <div className='App'>
       <Routes>
@@ -32,15 +41,15 @@ function App() {
         />
         <Route
           path="category/:slug"
-          element={<Product/>}
+          element={<Product />}
         />
-           {/* <Route
+        {/* <Route
           path='navbar'
           element={<SideBarWithNav />}
         /> */}
-          <Route
+        <Route
           path="product"
-          åelement={<Product />} />
+          element={<Product />} />
       </Routes>
       <ToastContainer />
     </div>

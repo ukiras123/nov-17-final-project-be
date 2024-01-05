@@ -1,7 +1,7 @@
 import React from "react";
 import { NavBar } from "../navBar/NavBar";
 
-const DefaultLayout = ({ children, pageTitle }) => {
+const DefaultLayout = ({ children }) => {
   return (
     <div>
       <div>
