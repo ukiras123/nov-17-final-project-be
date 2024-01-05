@@ -149,7 +149,16 @@ export const EditProductForm = () => {
       placeholder: "$12",
       value: product.price,
       required: true,
+    },{
+      label: "Quantity",
+      name: "qty",
+      type: "number",
+      placeholder: "23",
+      value: product.qty,
+      required: true,
     },
+    
+    
     {
       label: "Sale Price",
       name: "salesPrice",

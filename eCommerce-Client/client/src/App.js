@@ -13,13 +13,14 @@ import Product from "./pages/product/Product";
 import { useDispatch } from "react-redux";
 import { fetchAllProduct } from "./pages/product/ProductAction";
 import { fetchAllCategories } from "./pages/category/CatAction";
+import Cart from "./pages/cart/Cart";
 
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchAllProduct())
     dispatch(fetchAllCategories())
-  }, [])
+  }, [dispatch])
   return (
     <div className='App'>
       <Routes>
@@ -47,6 +48,7 @@ function App() {
           path='navbar'
           element={<SideBarWithNav />}
         /> */}
+        <Route path="/cart" element={<Cart/>} />
         <Route
           path="product"
           element={<Product />} />

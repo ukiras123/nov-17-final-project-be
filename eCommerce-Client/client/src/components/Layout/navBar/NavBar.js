@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { CiShoppingCart } from "react-icons/ci";
 import { FiLogIn } from "react-icons/fi";
 import { useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
@@ -6,11 +7,11 @@ import { Link, NavLink } from "react-router-dom";
 export const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { catList } = useSelector((state) => state.category);
+  const { cart } = useSelector((state) => state.cart);
 
   useEffect(() => {
     // console.log(category);
   }, []);
-  const [display, setDisplay] = useState();
 
   const inputMid = [
     {
@@ -18,21 +19,6 @@ export const NavBar = () => {
       title: "category",
       name: "Categories",
     },
-    // {
-    //   to: "/features",
-    //   title: "features",
-    //   name: "Features",
-    // },
-    // {
-    //   to: "/about-us",
-    //   title: "Aboutus",
-    //   name: "About us",
-    // },
-    // {
-    //   to: "/Contact",
-    //   title: "contactus",
-    //   name: "Contact us",
-    // },
   ];
 
   const inputSign = [
@@ -49,9 +35,9 @@ export const NavBar = () => {
     },
     {
       to: "/cart",
-      title:"cart",
-      name:"Cart"
-    }
+      title: "cart",
+      name: "Cart",
+    },
   ];
 
   return (
@@ -117,16 +103,18 @@ export const NavBar = () => {
                     {navConfig.name}
                     {navConfig.title === "category" && (
                       <>
-                      <ul className='clearboth absolute top-7 left-3'>
-                        {catList.map((item, id) => (
-                          <li
-                            className='clearboth invisible group-hover:visible font-normal first-letter:uppercase hover:bg-blue-500 hover:px-3 hover:rounded-2xl'
-                            key={id}
-                          >
-                            <Link to={`/category/${item.slug}`}>{item.title}</Link>
-                          </li>
-                        ))}
-                      </ul>
+                        <ul className='clearboth absolute top-7 left-3'>
+                          {catList.map((item, id) => (
+                            <li
+                              className='clearboth invisible group-hover:visible font-normal first-letter:uppercase hover:bg-blue-500 hover:px-3 hover:rounded-2xl'
+                              key={id}
+                            >
+                              <Link to={`/category/${item.slug}`}>
+                                {item.title}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
                       </>
                     )}
                   </NavLink>
@@ -151,6 +139,17 @@ export const NavBar = () => {
               >
                 <FiLogIn />
                 <span className='ml-2'>Login</span>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to='/cart'
+                className='text-white items-center hidden lg:flex'
+              >
+                <CiShoppingCart />
+                <span className='ml-2'>
+                  {cart.reduce((acc, item) => (acc += item.qty), 0)}
+                </span>
               </NavLink>
             </li>
           </ul>

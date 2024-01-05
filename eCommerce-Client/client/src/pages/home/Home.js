@@ -18,7 +18,7 @@ const Home = () => {
   }, [dispatch, productList, catList]);
   return (
     <div>
-      <DefaultLayout pageTitle={"Home page"}>
+      <DefaultLayout >
         <div>
           <Hero />
           <Carousel />

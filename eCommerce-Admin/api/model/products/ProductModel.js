@@ -32,6 +32,10 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    qty: {
+        type: Number,
+        required: true,
+    },
     salesPrice: {
         type: String,
     },
