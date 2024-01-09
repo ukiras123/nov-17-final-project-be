@@ -4,15 +4,23 @@ import { getFileURL } from "../../../utility";
 import { addProductToCart } from "../../../pages/cart/cartSlice";
 import { useDispatch } from "react-redux";
 
-const ProductCard = ({ thumbnail, title, description, salesPrice, price, _id  }) => {
-
-//Product add to cart 
-//data need to send product id and quantity 
-const dispatch = useDispatch();
-  const handleOnClick = ()=>{
-  dispatch(addProductToCart({thumbnail, title, _id,qty:1, salesPrice}))
-
-  }
+const ProductCard = ({
+  thumbnail,
+  title,
+  description,
+  salesPrice,
+  price,
+  _id,
+  qty,
+}) => {
+  //Product add to cart
+  //data need to send product id and quantity
+  const dispatch = useDispatch();
+  const handleOnClick = () => {
+    dispatch(
+      addProductToCart({ thumbnail, title, cartQty: 1, qty, _id, salesPrice })
+    );
+  };
   return (
     <div>
       <div className='card bg-slate-50 w-[280px] h-[350px] m-1 rounded-lg  shadow-2xl'>
@@ -32,7 +40,7 @@ const dispatch = useDispatch();
           <div className='pricing flex items-center'>
             <div className='price '>${salesPrice}</div>
             <div className='ml-2 text-xs '>
-              $<del>{price }</del>
+              $<del>{price}</del>
             </div>
           </div>
           <div className='flex items-center my-2'>

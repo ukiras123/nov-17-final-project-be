@@ -1,42 +1,42 @@
 import axios from "axios";
-const BASE_URL = process.env.REACT_APP_API_URL + "/api/v1" || "http://localhost:3005/api/v1"
-const axiosProcessor = async ({ method, url, body = {}, }) => {
-    // const headers = {
-    //     Authorization: isPrivate ? (withRefreshToken ? localStorage.getItem("refreshJWT") : localStorage.getItem("accessJWT")) : ""
+const BASE_URL =
+  process.env.REACT_APP_API_URL + "/api/v1" || "http://localhost:3005/api/v1";
+const axiosProcessor = async ({ method, url, body = {} }) => {
+  // const headers = {
+  //     Authorization: isPrivate ? (withRefreshToken ? localStorage.getItem("refreshJWT") : localStorage.getItem("accessJWT")) : ""
+  // }
+  // console.log("Auth", headers)
+  try {
+    // console.log({
+    //     method: method,
+    //     url,
+    //     data: body,
+
+    // })
+    const { data } = await axios({
+      method: method,
+      url,
+      data: body,
+    });
+    return data;
+  } catch (error) {
+    // console.log("Error ---->", error)
+    // if (error?.response?.data?.message === 'jwt expired') {
+    //     console.log("I am epire, dsfads")
+    //     // refresh token call
+    //     // New token lai sessin ma rakh
+    //     const { status, accessJWT } = await apiGetNewAccessToken();
+    //     if (status === "success") {
+    //         localStorage.setItem("accessJWT", accessJWT)
+    //     }
+    //     return axiosProcessor({ method, url, body })
     // }
-    // console.log("Auth", headers)
-    try {
-        console.log({
-            method: method,
-            url,
-            data: body,
-         
-        })
-        const { data } = await axios({
-            method: method,
-            url,
-            data: body,
-         
-        });
-        return data
-    } catch (error) {
-        // console.log("Error ---->", error)
-        // if (error?.response?.data?.message === 'jwt expired') {
-        //     console.log("I am epire, dsfads")
-        //     // refresh token call
-        //     // New token lai sessin ma rakh 
-        //     const { status, accessJWT } = await apiGetNewAccessToken();
-        //     if (status === "success") {
-        //         localStorage.setItem("accessJWT", accessJWT)
-        //     }
-        //     return axiosProcessor({ method, url, body })
-        // }
-        return {
-            status: 'error',
-            message:error?.response?.data?.message ||  error.message
-        }
-    }
-}
+    return {
+      status: "error",
+      message: error?.response?.data?.message || error.message,
+    };
+  }
+};
 
 // export const apiGetNewAccessToken = () => {
 //     // post axios
@@ -83,7 +83,6 @@ const axiosProcessor = async ({ method, url, body = {}, }) => {
 //     dispatch(setUser({}))
 // }
 
-
 // export const apiGetAdminInfo = () => {
 //     // post axios
 //     return axiosProcessor({
@@ -103,16 +102,12 @@ const axiosProcessor = async ({ method, url, body = {}, }) => {
 
 // }
 
-
 export const apiGetCategories = () => {
-    return axiosProcessor({
-        method: "get",
-        url: `${BASE_URL}/category`,
-       
-    })
-}
-
-
+  return axiosProcessor({
+    method: "get",
+    url: `${BASE_URL}/category`,
+  });
+};
 
 // Product API
 
@@ -126,12 +121,11 @@ export const apiGetCategories = () => {
 // }
 
 export const apiGetProducts = () => {
-    return axiosProcessor({
-        method: "get",
-        url: `${BASE_URL}/product`,
-        
-    })
-}
+  return axiosProcessor({
+    method: "get",
+    url: `${BASE_URL}/product`,
+  });
+};
 
 // export const apiUpdateProduct = (id, data) => {
 //     return axiosProcessor({

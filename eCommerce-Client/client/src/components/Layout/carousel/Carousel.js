@@ -7,7 +7,6 @@ import { fetchAllProduct } from "../../../pages/product/ProductAction";
 function Carousel({ title }) {
   const { productList } = useSelector((state) => state.product);
   const content = useRef();
-
   const dispatch = useDispatch();
   useEffect(() => {
     !productList.length && dispatch(fetchAllProduct());

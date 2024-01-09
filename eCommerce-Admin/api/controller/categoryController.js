@@ -1,8 +1,13 @@
-const { default: slugify } = require('slugify');
+/* eslint-disable consistent-return */
+const { default: slugify } = require("slugify");
 const {
-  createCategory, getCategoriesByFilter, getCategoryById, updateCategoryById, deleteCategoryById,
-} = require('../model/category/CategoryModel');
-const { message } = require('../utils/const');
+  createCategory,
+  getCategoriesByFilter,
+  getCategoryById,
+  updateCategoryById,
+  deleteCategoryById,
+} = require("../model/category/CategoryModel");
+const { message } = require("../utils/const");
 
 const createCategoryController = async (req, res, next) => {
   try {
@@ -15,7 +20,7 @@ const createCategoryController = async (req, res, next) => {
     await createCategory(obj);
     res.json({
       status: message.SUCCESS,
-      message: 'New Category Created',
+      message: "New Category Created",
     });
   } catch (e) {
     next(e);
@@ -39,7 +44,7 @@ const getACategoryController = async (req, res, next) => {
     const { _id } = req.params;
     const result = await getCategoryById(_id);
     if (!result) {
-      const error = new Error('Not Found');
+      const error = new Error("Not Found");
       error.statusCode = 404;
       return next(error);
     }
@@ -71,13 +76,13 @@ const deleteACategoryController = async (req, res, next) => {
 
     const result = await deleteCategoryById(_id);
     if (!result) {
-      const error = new Error('Not Found');
+      const error = new Error("Not Found");
       error.statusCode = 404;
       return next(error);
     }
     res.json({
       status: message.SUCCESS,
-      message: 'Successfully Deleted',
+      message: "Successfully Deleted",
     });
   } catch (e) {
     next(e);

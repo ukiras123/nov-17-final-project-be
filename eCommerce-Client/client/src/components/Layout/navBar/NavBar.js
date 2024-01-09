@@ -148,7 +148,7 @@ export const NavBar = () => {
               >
                 <CiShoppingCart />
                 <span className='ml-2'>
-                  {cart.reduce((acc, item) => (acc += item.qty), 0)}
+                  {cart.reduce((acc, item) => (acc += item.cartQty), 0)}
                 </span>
               </NavLink>
             </li>
