@@ -60,7 +60,7 @@ const verifyClient = async (req, res, next) => {
       }
     );
     if (response?._id) {
-      const { fName } = await getClient({ e: email });
+      const { fName } = await getClient({ email: e });
       await sendAccountActivatedNotificationEmail({
         email: e,
         link: `${FE_URL}/login`,
