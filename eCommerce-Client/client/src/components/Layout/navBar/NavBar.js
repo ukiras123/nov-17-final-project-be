@@ -9,10 +9,11 @@ export const NavBar = () => {
   const { catList } = useSelector((state) => state.category);
   const { cart } = useSelector((state) => state.cart);
 
+  const [display, setDisplay] = useState([]);
   useEffect(() => {
-    // console.log(category);
+    setDisplay([...display, ...catList]);
   }, []);
-
+  // console.log(display);
   const inputMid = [
     {
       to: "/category",
@@ -92,7 +93,7 @@ export const NavBar = () => {
                 Ecom Client
               </span>
             </Link>
-            <ul className='items-center justify-center w-full gap-6 space-x-4 lg:flex'>
+            <ul className='items-center overflow z-50 justify-center w-full gap-6 space-x-4 lg:flex'>
               {inputMid.map((navConfig, id) => (
                 <li key={id}>
                   <NavLink
@@ -104,16 +105,18 @@ export const NavBar = () => {
                     {navConfig.title === "category" && (
                       <>
                         <ul className='clearboth absolute top-7 left-3'>
-                          {catList.map((item, id) => (
-                            <li
-                              className='clearboth invisible group-hover:visible font-normal first-letter:uppercase hover:bg-blue-500 hover:px-3 hover:rounded-2xl'
-                              key={id}
-                            >
-                              <Link to={`/category/${item.slug}`}>
-                                {item.title}
-                              </Link>
-                            </li>
-                          ))}
+                          {display
+                            .filter((item) => item.status === "active")
+                            .map((item, id) => (
+                              <li
+                                className='clearboth invisible group-hover:visible font-normal first-letter:uppercase hover:bg-blue-500 hover:px-3 hover:rounded-2xl'
+                                key={id}
+                              >
+                                <Link to={`/category/${item.slug}`}>
+                                  {item.title}
+                                </Link>
+                              </li>
+                            ))}
                         </ul>
                       </>
                     )}
@@ -131,7 +134,7 @@ export const NavBar = () => {
               </li>
             </ul>
           </div>
-          <ul className='flex items-center  space-x-8 lg:flex'>
+          <ul className='flex items-center space-x-8 lg:flex'>
             <li>
               <NavLink
                 to='/signin'
@@ -264,14 +267,18 @@ export const NavBar = () => {
                             {item.name}
                             {item.title === "category" && (
                               <ul>
-                                {catList.map((item, id) => (
-                                  <li
-                                    className='m-2 font-normal first-letter:uppercase hover:bg-blue-500'
-                                    key={id}
-                                  >
-                                    <Link to={item.name}>{item.name}</Link>
-                                  </li>
-                                ))}
+                                {display
+                                  .filter((item) => item.status === "active")
+                                  .map((item, id) => (
+                                    <li
+                                      className='m-2 font-normal first-letter:uppercase hover:bg-blue-500'
+                                      key={id}
+                                    >
+                                      <Link to={`/category/${item.slug}`}>
+                                        {item.title}
+                                      </Link>
+                                    </li>
+                                  ))}
                               </ul>
                             )}
                           </NavLink>

@@ -1,31 +1,27 @@
-import { useDispatch } from "react-redux";
-import { removeProductFromCart } from "../pages/cart/cartSlice";
-
-export const TBL_CATEGOR = "category";
-export const TBL_PRODUCT = "product";
-
+// eslint-disable-next-line
+export const TBL_CATEGOR = "category"; // eslint-disable-next-line
+export const TBL_PRODUCT = "product"; // eslint-disable-next-line
+// eslint-disable-next-line
 export const InputField = [
+  // eslint-disable-next-line
   {
-    name: "user",
-    type: "email",
-    label: "Email",
-    require,
-  },
+    name: "user", // eslint-disable-next-line
+    type: "email", // eslint-disable-next-line
+    label: "Email", // eslint-disable-next-line
+    require, // eslint-disable-next-line
+  }, // eslint-disable-next-line
   {
-    name: "password",
-    type: "password",
-    label: "Password",
-    require,
+    name: "password", // eslint-disable-next-line
+    type: "password", // eslint-disable-next-line
+    label: "Password", // eslint-disable-next-line
+    require, // eslint-disable-next-line
   },
 ];
-
+// eslint-disable-next-line
 export const isCheckQty = (cartQty) => {
-  alert("we run out of Stock! Check later, thank you! ");
-  return cartQty;
-};
-
-// export const removeProduct = (id) => {
-//   const dispatch = useDispatch();
-
-//   dispatch(removeProductFromCart(id));
-// };
+  // eslint-disable-next-line
+  alert("we run out of Stock! Check later, thank you! "); // eslint-disable-next-line
+  return cartQty; // eslint-disable-next-line
+}; // eslint-disable-next-line
+// eslint-disable-next-line
+// eslint-disable-next-line

@@ -16,7 +16,7 @@ const CartTable = () => {
   const sortedCart = [...cart].sort((a, b) =>
     a.title.toLowerCase().localeCompare(b.title.toLowerCase())
   );
-  console.log(sortedCart);
+  // console.log(sortedCart);
   const dispatch = useDispatch();
   const handleOnIncrease = (_id) => {
     dispatch(increaseProductQty({ _id }));
@@ -39,54 +39,168 @@ const CartTable = () => {
     dispatch(removeProductFromCart({ _id }));
   };
   return (
-    <div className='overflow-x-auto'>
-      <Table striped>
-        <Table.Head>
-          <Table.HeadCell>Product name</Table.HeadCell>
-          <Table.HeadCell>Image</Table.HeadCell>
-          <Table.HeadCell>Quantity</Table.HeadCell>
-          <Table.HeadCell>Price</Table.HeadCell>
-          <Table.HeadCell>
-            {/* <span className="sr-only">Delete</span> */} Action
-          </Table.HeadCell>
-        </Table.Head>
-        <Table.Body className='divide-y'>
-          {sortedCart.map((item) => {
-            return (
-              <Table.Row
-                key={item._id}
-                className='bg-white dark:border-gray-700 dark:bg-gray-800'
-              >
-                <Table.Cell className='whitespace-nowrap font-medium text-gray-900 dark:text-white'>
-                  {item.title}
-                </Table.Cell>
-                <Table.Cell>
-                  <img
-                    width='100px'
-                    src={getFileURL(item.thumbnail)}
-                    alt='product name'
-                  />
-                </Table.Cell>
-                <Table.Cell className='flex'>
-                  {" "}
-                  <FiChevronLeft onClick={() => handleOnDecrease(item._id)} />
-                  {item.cartQty}
-                  <FiChevronRight
-                    onClick={() => handleOnIncrease(item._id)}
-                  />{" "}
-                </Table.Cell>
-                <Table.Cell>${item.cartQty * item.salesPrice}</Table.Cell>
-                <Table.Cell>
-                  <Button onClick={() => handleOnDelete(item._id)}>
-                    Delete
-                  </Button>
-                </Table.Cell>
-              </Table.Row>
-            );
-          })}
-        </Table.Body>
-      </Table>
-    </div>
+    <>
+      <div className='block lg:hidden'>
+        {/* Small Screen Layout */}
+        {sortedCart.map((item) => (
+          <div
+            key={item._id}
+            className='border p-4 mb-4 rounded-lg'
+          >
+            <div className='grid grid-cols-2 gap-4'>
+              {/* Product Name */}
+              <div>
+                <strong>Product Name:</strong>
+              </div>
+              <div>{item.title}</div>
+
+              {/* Image */}
+              <div>
+                <strong>Image:</strong>
+              </div>
+              <div>
+                <img
+                  className='w-20 h-20 object-cover'
+                  src={getFileURL(item.thumbnail)}
+                  alt={item.title}
+                />
+              </div>
+
+              {/* Quantity */}
+              <div>
+                <strong>Quantity:</strong>
+              </div>
+              <div className='flex items-center'>
+                <FiChevronLeft onClick={() => handleOnDecrease(item._id)} />
+                {item.cartQty}
+                <FiChevronRight onClick={() => handleOnIncrease(item._id)} />
+              </div>
+
+              {/* Price */}
+              <div>
+                <strong>Price:</strong>
+              </div>
+              <div>${item.cartQty * item.salesPrice}</div>
+
+              {/* Action */}
+              <div>
+                <strong>Action:</strong>
+              </div>
+              <div>
+                <Button onClick={() => handleOnDelete(item._id)}>Delete</Button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className='hidden lg:block'>
+        {/* Large Screen Layout */}
+        <div className='overflow-x-auto'>
+          <Table striped>
+            {/* ... Your existing Table Head and Body for large screens ... */}
+
+            <div className='overflow-x-auto '>
+              <Table striped>
+                <Table.Head>
+                  <Table.HeadCell>Product name</Table.HeadCell>
+                  <Table.HeadCell>Image</Table.HeadCell>
+                  <Table.HeadCell>Quantity</Table.HeadCell>
+                  <Table.HeadCell>Price</Table.HeadCell>
+                  <Table.HeadCell>
+                    {/* <span className="sr-only">Delete</span> */} Action
+                  </Table.HeadCell>
+                </Table.Head>
+                <Table.Body className='divide-y'>
+                  {sortedCart.map((item) => {
+                    return (
+                      <Table.Row
+                        key={item._id}
+                        className='bg-white dark:border-gray-700 dark:bg-gray-800'
+                      >
+                        <Table.Cell className='whitespace-nowrap font-medium text-gray-900 dark:text-white'>
+                          {item.title}
+                        </Table.Cell>
+                        <Table.Cell>
+                          <img
+                            width='100px'
+                            src={getFileURL(item.thumbnail)}
+                            alt='product name'
+                          />
+                        </Table.Cell>
+                        <Table.Cell style={{ width: "6rem" }}>
+                          <div className='flex justify-between text-center '>
+                            <FiChevronLeft
+                              onClick={() => handleOnDecrease(item._id)}
+                            />
+                            {item.cartQty}
+                            <FiChevronRight
+                              onClick={() => handleOnIncrease(item._id)}
+                            />
+                          </div>
+                        </Table.Cell>
+                        <Table.Cell>
+                          ${item.cartQty * item.salesPrice}
+                        </Table.Cell>
+                        <Table.Cell>
+                          <Button onClick={() => handleOnDelete(item._id)}>
+                            Delete
+                          </Button>
+                        </Table.Cell>
+                      </Table.Row>
+                    );
+                  })}
+
+                  {/* Total Price Section */}
+                  <Table.Row className=' bg-blue-700 dark:border-gray-700 dark:bg-gray-800'>
+                    {/* <Table.Cell
+              colSpan={3}
+              className='font-medium text-right'
+            >
+              Total Price:
+            </Table.Cell>
+            <Table.Cell colSpan={3}>
+              $
+              {cart.reduce(
+                (acc, item) => (acc += item.salesPrice * item.cartQty),
+                0
+              )}
+            </Table.Cell> */}
+
+                    <Table.Cell
+                      colSpan={3}
+                      className='font-medium text-right'
+                    >
+                      Total Price
+                    </Table.Cell>
+                    <Table.Cell
+                      colSpan={2}
+                      className='text-lg font-extrabold'
+                    >
+                      $
+                      {cart.reduce(
+                        (acc, item) => (acc += item.salesPrice * item.cartQty),
+                        0
+                      )}
+                    </Table.Cell>
+                    {/* <Table.Cell></Table.Cell>  */}
+                  </Table.Row>
+
+                  <Table.Row>
+                    <Table.Cell
+                      colSpan={4}
+                      className='text-right'
+                    >
+                      <Button>Proceed To Checkout</Button>
+                    </Table.Cell>
+                  </Table.Row>
+                </Table.Body>
+              </Table>
+            </div>
+          </Table>
+        </div>
+      </div>
+    </>
   );
 };
 
