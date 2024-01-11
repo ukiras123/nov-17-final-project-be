@@ -8,18 +8,18 @@ const {
   generateOTP,
   resetPassword,
 } = require("../controller/clientController");
-
+const { auth, refreshAuth } = require("../middleware/authMiddleware");
 const clientRouter = express.Router();
 
 // client registeration
 clientRouter.post("/registration", registerClient);
 clientRouter.post("/account-verification", verifyClient);
 // accesstoken
-
+clientRouter.get("/get-accessjwt", refreshAuth);
 // login
 clientRouter.post("/login", loginClient);
 // get client details using access
-clientRouter.get("/", getClientInfo);
+clientRouter.get("/", auth, getClientInfo);
 // logout
 clientRouter.post("/logout", logOutClient);
 // reset passwords

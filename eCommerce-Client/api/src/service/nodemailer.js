@@ -20,7 +20,7 @@ const transporter = nodemailer.createTransport(
 //   },
 // });
 const sendAccountActivationEmail = async ({ link, email, fName }) => {
-  await transporter.sendMail(
+  transporter.sendMail(
     {
       from: '" PK👻" <pk@example.com>', // sender address
       to: email,
