@@ -5,7 +5,7 @@ export const TBL_PRODUCT = "product"; // eslint-disable-next-line
 export const InputField = [
   // eslint-disable-next-line
   {
-    name: "user", // eslint-disable-next-line
+    name: "email", // eslint-disable-next-line
     type: "email", // eslint-disable-next-line
     label: "Email", // eslint-disable-next-line
     require, // eslint-disable-next-line

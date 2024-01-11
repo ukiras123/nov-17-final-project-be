@@ -1,21 +1,27 @@
 import React, { useState } from "react";
 import DefaultLayout from "../../components/Layout/defaultLayout/DefaultLayout";
 import { InputField } from "../../utility/Constant";
+import { loginUser } from "../../helper/axios";
+import { useDispatch } from "react-redux";
+import { loginClientUser } from "./UserAction";
+import { useNavigate } from "react-router-dom";
 const SignIn = () => {
   const [form, setForm] = useState();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleOnChange = (e) => {
     e.preventDefault();
-    const { label, value } = e.target;
+    const { name, value } = e.target;
     setForm({
       ...form,
-      [label]: value,
+      [name]: value,
     });
   };
-  const handleOnSubmit = (e) => {
-    console.log(e);
+  const handleOnSubmit = async (e) => {
     e.preventDefault();
-    console.log(form);
+
+    dispatch(loginClientUser(form, navigate));
   };
 
   return (

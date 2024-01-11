@@ -18,6 +18,7 @@ const axiosProcessor = async ({ method, url, body = {} }) => {
       url,
       data: body,
     });
+    // console.log(data);
     return data;
   } catch (error) {
     // console.log("Error ---->", error)
@@ -57,14 +58,15 @@ const axiosProcessor = async ({ method, url, body = {} }) => {
 //     })
 // }
 
-// export const loginUser = (data) => {
-//     // post axios
-//     return axiosProcessor({
-//         method: "post",
-//         body: data,
-//         url: `${BASE_URL}/admin/login`,
-//     })
-// }
+export const loginUser = (data) => {
+  // post axios
+  // console.log({ data });
+  return axiosProcessor({
+    method: "post",
+    body: data,
+    url: `${BASE_URL}/client/login`,
+  });
+};
 
 // export const apiLogoutUser = () => async dispatch => {
 //     const accessJWT = localStorage.getItem("accessJWT")
@@ -83,14 +85,34 @@ const axiosProcessor = async ({ method, url, body = {} }) => {
 //     dispatch(setUser({}))
 // }
 
-// export const apiGetAdminInfo = () => {
-//     // post axios
-//     return axiosProcessor({
-//         method: "get",
-//         url: `${BASE_URL}/admin`,
-//         isPrivate: true
-//     })
-// }
+// export const apiGetClientUserInfo = (email) => {
+//   // console.log("here");
+//   // post axios
+//   return axiosProcessor({
+//     method: "get",
+//     body: email,
+//     url: `${BASE_URL}/client`,
+//     // isPrivate: true,
+//   });
+// };
+
+// Replace with your actual base URL
+
+export const apiGetClientUserInfo = async (email) => {
+  try {
+    // console.log(email);
+    const response = await axios.get(`http://localhost:3005/api/v1/client`, {
+      params: {
+        e: email,
+        // c: "3c3a9540-3c82-428f-8b66-15e979852801",
+      },
+    });
+    return response.data; // Return the response data
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error; // Throw the error to be handled by the caller
+  }
+};
 
 // export const verifyUser = (data) => {
 //     // post axios

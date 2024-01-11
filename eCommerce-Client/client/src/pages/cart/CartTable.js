@@ -9,10 +9,11 @@ import {
   removeProductFromCart,
 } from "./cartSlice";
 import Button from "../../components/Button/Button";
+import { Link } from "react-router-dom";
 const CartTable = () => {
   const { cart } = useSelector((state) => state.cart);
+  const { client } = useSelector((state) => state.client);
   //sorting cart items on alphabetic order using title
-
   const sortedCart = [...cart].sort((a, b) =>
     a.title.toLowerCase().localeCompare(b.title.toLowerCase())
   );
@@ -191,7 +192,13 @@ const CartTable = () => {
                       colSpan={4}
                       className='text-right'
                     >
-                      <Button>Proceed To Checkout</Button>
+                      {client._id ? (
+                        <Button> Proceed To Checkout</Button>
+                      ) : (
+                        <Button>
+                          <Link to='/login'>Login To Checkout</Link>
+                        </Button>
+                      )}
                     </Table.Cell>
                   </Table.Row>
                 </Table.Body>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { CiShoppingCart } from "react-icons/ci";
-import { FiLogIn } from "react-icons/fi";
+import { FiLogIn, FiLogOut } from "react-icons/fi";
 import { useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
 
@@ -8,6 +8,8 @@ export const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { catList } = useSelector((state) => state.category);
   const { cart } = useSelector((state) => state.cart);
+
+  const { client } = useSelector((state) => state.client);
 
   const [display, setDisplay] = useState([]);
   useEffect(() => {
@@ -38,6 +40,11 @@ export const NavBar = () => {
       to: "/cart",
       title: "cart",
       name: "Cart",
+    },
+    {
+      to: "/signout",
+      title: "signout",
+      name: "Sign Out",
     },
   ];
 
@@ -136,13 +143,25 @@ export const NavBar = () => {
           </div>
           <ul className='flex items-center space-x-8 lg:flex'>
             <li>
-              <NavLink
-                to='/signin'
-                className='text-white items-center hidden lg:flex'
-              >
-                <FiLogIn />
-                <span className='ml-2'>Login</span>
-              </NavLink>
+              {client._id ? (
+                <NavLink
+                  to='/logout'
+                  className='text-white items-center hidden lg:flex'
+                  // onClick={handleOnLogout}
+                >
+                  <FiLogOut />
+
+                  <span className='whitespace-nowrap ml-2'>Log Out</span>
+                </NavLink>
+              ) : (
+                <NavLink
+                  to='/login'
+                  className='text-white items-center hidden lg:flex'
+                >
+                  <FiLogIn />
+                  <span className='ml-2 whitespace-nowrap'>Log In</span>
+                </NavLink>
+              )}
             </li>
             <li>
               <NavLink
@@ -287,17 +306,31 @@ export const NavBar = () => {
 
                       {inputSign.map((item, id) => (
                         <li key={id}>
-                          <NavLink
-                            {...item}
-                            key={id}
-                            className={
-                              item.title === "signin"
-                                ? "font-medium tracking-wide mt-2 text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
-                                : "inline-flex items-center justify-center w-full h-12 p-6 font-medium tracking-wide text-white  transition duration-200 rounded shadow-md bg-black hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
-                            }
-                          >
-                            {item.name}
-                          </NavLink>
+                          {!client._id ? (
+                            <NavLink
+                              {...item}
+                              key={id}
+                              className={
+                                item.title === "signin"
+                                  ? "font-medium tracking-wide mt-2 text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                                  : "inline-flex items-center justify-center w-full h-12 p-6 font-medium tracking-wide text-white  transition duration-200 rounded shadow-md bg-black hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
+                              }
+                            >
+                              {item.name}
+                            </NavLink>
+                          ) : (
+                            <NavLink
+                              {...item}
+                              key={id}
+                              className={
+                                item.title === "signout"
+                                  ? "font-medium tracking-wide mt-2 text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                                  : "inline-flex items-center justify-center w-full h-12 p-6 font-medium tracking-wide text-white  transition duration-200 rounded shadow-md bg-black hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
+                              }
+                            >
+                              {item.name}
+                            </NavLink>
+                          )}
                         </li>
                       ))}
                     </ul>

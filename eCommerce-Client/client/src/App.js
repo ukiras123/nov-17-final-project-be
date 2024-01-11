@@ -14,13 +14,14 @@ import { useDispatch } from "react-redux";
 import { fetchAllProduct } from "./pages/product/ProductAction";
 import { fetchAllCategories } from "./pages/category/CatAction";
 import Cart from "./pages/cart/Cart";
+import { getClientUserInfo } from "./pages/user/UserAction";
 
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchAllProduct())
-    dispatch(fetchAllCategories())
-  }, [dispatch])
+    // dispatch(getClientUserInfo({ email: "nirajlimbu49@gmail.com" }));
+    dispatch(fetchAllCategories());
+  }, [dispatch]);
   return (
     <div className='App'>
       <Routes>
@@ -29,7 +30,7 @@ function App() {
           element={<Home />}
         />
         <Route
-          path='signin'
+          path='login'
           element={<SignIn />}
         ></Route>
         <Route
@@ -41,17 +42,21 @@ function App() {
           element={<Category />}
         />
         <Route
-          path="category/:slug"
+          path='category/:slug'
           element={<Product />}
         />
         {/* <Route
           path='navbar'
           element={<SideBarWithNav />}
         /> */}
-        <Route path="/cart" element={<Cart/>} />
         <Route
-          path="product"
-          element={<Product />} />
+          path='/cart'
+          element={<Cart />}
+        />
+        <Route
+          path='product'
+          element={<Product />}
+        />
       </Routes>
       <ToastContainer />
     </div>

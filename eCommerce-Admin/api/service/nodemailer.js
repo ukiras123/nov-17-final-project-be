@@ -1,21 +1,34 @@
 // @ts-nocheck
 /* eslint-disable import/no-extraneous-dependencies */
-const nodemailer = require('nodemailer');
+const nodemailer = require("nodemailer");
 
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: process.env.SMTP_PORT,
-  secure: true,
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
-  },
-});
+var smtpTransport = require("nodemailer-smtp-transport");
+
+const transporter = nodemailer.createTransport(
+  smtpTransport({
+    service: "gmail",
+    host: process.env.SMTP_HOST,
+    port: process.env.SMTP_PORT,
+    auth: {
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASS,
+    },
+  })
+);
+// const transporter = nodemailer.createTransport({
+//   host: process.env.SMTP_HOST,
+//   port: process.env.SMTP_PORT,
+//   secure: true,
+//   auth: {
+//     user: process.env.SMTP_USER,
+//     pass: process.env.SMTP_PASS,
+//   },
+// });
 const sendAccountActivationEmail = async ({ link, email, fName }) => {
   await transporter.sendMail({
     from: '"CanberraDentedCode" <canberra@dentedcode.com>', // sender address
     to: email, // list of receivers
-    subject: 'Account Activation Required', // Subject line
+    subject: "Account Activation Required", // Subject line
     text: `Hello ${fName}, Please click on this link to activate your account. ${link}`, // plain text body
     html: `
         <p>
@@ -32,11 +45,15 @@ const sendAccountActivationEmail = async ({ link, email, fName }) => {
   });
 };
 
-const sendAccountActivatedNotificationEmail = async ({ link, email, fName }) => {
+const sendAccountActivatedNotificationEmail = async ({
+  link,
+  email,
+  fName,
+}) => {
   await transporter.sendMail({
     from: '"CanberraDentedCode" <canberra@dentedcode.com>', // sender address
     to: email, // list of receivers
-    subject: 'Account Successfully Activated', // Subject line
+    subject: "Account Successfully Activated", // Subject line
     text: `Hello ${fName}, Your account is activated.Please click on this link to login. ${link}`, // plain text body
     html: `
           <p>
@@ -57,7 +74,7 @@ const sendOTPEmail = async ({ otp, email, fName }) => {
   await transporter.sendMail({
     from: '"CanberraDentedCode" <canberra@dentedcode.com>', // sender address
     to: email, // list of receivers
-    subject: 'Forget Password OTP', // Subject line
+    subject: "Forget Password OTP", // Subject line
     text: `Hello ${fName}, Your OTP is  ${otp}`, // plain text body
     html: `
           <p>
@@ -77,8 +94,8 @@ const passwordChangeSuccessNotification = async ({ email }) => {
   await transporter.sendMail({
     from: '"CanberraDentedCode" <canberra@dentedcode.com>', // sender address
     to: email, // list of receivers
-    subject: 'Password reset success', // Subject line
-    text: 'Hello, Your password is changed successfully', // plain text body
+    subject: "Password reset success", // Subject line
+    text: "Hello, Your password is changed successfully", // plain text body
     html: `
           <p>
           Hello,

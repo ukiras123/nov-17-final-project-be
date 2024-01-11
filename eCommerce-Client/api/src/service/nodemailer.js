@@ -12,7 +12,13 @@ const transporter = nodemailer.createTransport(
     },
   })
 );
-
+// let transporter = nodemailer.createTransport({
+//   service: "gmail",
+//   auth: {
+//     user: "canberranepalese@gmail.com", // Replace with your email
+//     pass: "Nirajml12", // Replace with your password
+//   },
+// });
 const sendAccountActivationEmail = async ({ link, email, fName }) => {
   await transporter.sendMail(
     {
@@ -40,16 +46,16 @@ const sendAccountActivatedNotificationEmail = async ({
     to: email,
     subject: `Account activated Notification`,
     text: `Hello ${fName}, your account has been activated! Please click on the link to login ${link},  `, // plain text body
-    html: `<p>
-        Hello ${fName},
+    //   html: `<p>
+    //       Hello ${fName},
 
-        Please click on this link to login!
-        <a href="${link}">${link}</a>
-  
-        Thank you,
-        PK
-        
-        </p>`, // html body
+    //       Please click on this link to login!
+    //       <a href="${link}">${link}</a>
+
+    //       Thank you,
+    //       PK
+
+    //       </p>`, // html body
   });
 };
 const sendOTPEmail = async ({ otp, email, fName }) => {

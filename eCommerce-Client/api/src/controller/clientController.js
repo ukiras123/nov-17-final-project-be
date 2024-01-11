@@ -38,7 +38,9 @@ const registerClient = async (req, res, next) => {
       message:
         "Pease check your email and follow instruction to activate your account",
     });
-    const link = `${FE_URL}/client-verification?c=${verificationCode}&e=${email}`;
+    const link = `${FE_URL}/client-verification?c=${verificationCode}&e=${encodeURIComponent(
+      email
+    )}`;
     await sendAccountActivationEmail({ link, fName, email });
   } catch (error) {
     next(error);
@@ -59,8 +61,10 @@ const verifyClient = async (req, res, next) => {
         status: "active",
       }
     );
+    // const { _id } = response;
+
     if (response?._id) {
-      const { fName } = await getClient({ e: email });
+      const { fName } = await getClient({ email: e });
       await sendAccountActivatedNotificationEmail({
         email: e,
         link: `${FE_URL}/login`,
@@ -115,11 +119,31 @@ const loginClient = async (req, res, next) => {
   }
 };
 const getClientInfo = async (req, res, next) => {
+  const { e } = req.query;
+  // console.log("here", aa);
+  const data = await getClient({ email: e });
+  // console.log(fName);
+
   try {
-    res.json({
-      status: SUCCESS,
-      client: req.clientInfo,
-    });
+    if (data?._id && data?.status == "active") {
+      const {
+        refreshJWT,
+        password,
+        isverified,
+        createdAt,
+        updatedAt,
+        verificationCode,
+        ...rest
+      } = data.toJSON();
+      // user.refreshJWT = undefined;
+      // user.password = undefined;
+      // req.clientInfo = rest;
+      res.json({
+        status: SUCCESS,
+        client: rest,
+      });
+      // return next();
+    }
   } catch (e) {
     next(e);
   }
