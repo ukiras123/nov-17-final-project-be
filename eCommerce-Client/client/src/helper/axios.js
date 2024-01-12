@@ -149,6 +149,14 @@ export const apiGetProducts = () => {
   });
 };
 
+export const createOrder = (orderObj) => {
+  return axiosProcessor({
+    method: "post",
+    body: orderObj,
+    url: `${BASE_URL}/order`,
+  });
+};
+
 // export const apiUpdateProduct = (id, data) => {
 //     return axiosProcessor({
 //         method: "put",

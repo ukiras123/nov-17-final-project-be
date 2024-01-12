@@ -2,25 +2,29 @@ const mongoose = require("mongoose");
 
 const orderSchema = new mongoose.Schema(
   {
-    clientDetails: {
-      clientDetails: {
-        type: mongoose.Schema.Types.Mixed,
-        required: true,
-      },
-      cartInformation: {
-        type: mongoose.Schema.Types.Mixed,
-        required: true,
-      },
-      shippingAddress: {
-        type: mongoose.Schema.Types.Mixed,
-        required: true,
-      },
-      paymentMethod: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "payment-method",
-        required: true,
-      },
+    status: {
+      type: String,
+      required: true,
+      default: "pending",
+      enum: ["pending", "shipped", "delivered"],
     },
+    clientDetails: {
+      type: mongoose.Schema.Types.Mixed,
+      required: true,
+    },
+    cartInformation: {
+      type: mongoose.Schema.Types.Mixed,
+      required: true,
+    },
+    shippingAddress: {
+      type: mongoose.Schema.Types.Mixed,
+      required: true,
+    },
+    // paymentMethod: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: "payment-method",
+    //   required: true,
+    // },
   },
   { timestamps: true }
 );

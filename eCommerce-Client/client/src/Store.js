@@ -4,6 +4,7 @@ import productReducer from "./pages/product/ProductSlice";
 import cartReducer from "./pages/cart/cartSlice";
 import { persistStore, persistReducer } from "redux-persist";
 import clientReducer from "./pages/user/UserSlice";
+import orderReducer from "./pages/order/OrderSlice";
 import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
 
 const persistConfig = {
@@ -16,6 +17,7 @@ const allReducers = combineReducers({
   product: productReducer,
   cart: cartReducer,
   client: clientReducer,
+  order: orderReducer,
 });
 const persistedReducer = persistReducer(persistConfig, allReducers);
 

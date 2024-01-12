@@ -9,8 +9,8 @@ import {
   removeProductFromCart,
 } from "./cartSlice";
 import Button from "../../components/Button/Button";
-import { Link } from "react-router-dom";
-const CartTable = () => {
+import { Link, useNavigate } from "react-router-dom";
+const CartTable = ({ isOrderPage }) => {
   const { cart } = useSelector((state) => state.cart);
   const { client } = useSelector((state) => state.client);
   //sorting cart items on alphabetic order using title
@@ -38,6 +38,13 @@ const CartTable = () => {
   };
   const handleOnDelete = (_id) => {
     dispatch(removeProductFromCart({ _id }));
+  };
+
+  const navigate = useNavigate();
+  const handleOnProceed = () => {
+    console.log("cart", JSON.stringify(cart));
+    console.log("user", JSON.stringify(client));
+    navigate("/order");
   };
   return (
     <>
@@ -72,9 +79,13 @@ const CartTable = () => {
                 <strong>Quantity:</strong>
               </div>
               <div className='flex items-center'>
-                <FiChevronLeft onClick={() => handleOnDecrease(item._id)} />
+                {!isOrderPage && (
+                  <FiChevronLeft onClick={() => handleOnDecrease(item._id)} />
+                )}
                 {item.cartQty}
-                <FiChevronRight onClick={() => handleOnIncrease(item._id)} />
+                {!isOrderPage && (
+                  <FiChevronRight onClick={() => handleOnIncrease(item._id)} />
+                )}
               </div>
 
               {/* Price */}
@@ -84,9 +95,11 @@ const CartTable = () => {
               <div>${item.cartQty * item.salesPrice}</div>
 
               {/* Action */}
-              <div>
-                <strong>Action:</strong>
-              </div>
+              {!isOrderPage && (
+                <div>
+                  <strong>Action:</strong>
+                </div>
+              )}
               <div>
                 <Button onClick={() => handleOnDelete(item._id)}>Delete</Button>
               </div>
@@ -108,9 +121,11 @@ const CartTable = () => {
                   <Table.HeadCell>Image</Table.HeadCell>
                   <Table.HeadCell>Quantity</Table.HeadCell>
                   <Table.HeadCell>Price</Table.HeadCell>
-                  <Table.HeadCell>
-                    {/* <span className="sr-only">Delete</span> */} Action
-                  </Table.HeadCell>
+                  {!isOrderPage && (
+                    <Table.HeadCell>
+                      {/* <span className="sr-only">Delete</span> */} Action3
+                    </Table.HeadCell>
+                  )}
                 </Table.Head>
                 <Table.Body className='divide-y'>
                   {sortedCart.map((item) => {
@@ -131,23 +146,30 @@ const CartTable = () => {
                         </Table.Cell>
                         <Table.Cell style={{ width: "6rem" }}>
                           <div className='flex justify-between text-center '>
-                            <FiChevronLeft
-                              onClick={() => handleOnDecrease(item._id)}
-                            />
+                            {!isOrderPage && (
+                              <FiChevronLeft
+                                onClick={() => handleOnDecrease(item._id)}
+                              />
+                            )}
                             {item.cartQty}
-                            <FiChevronRight
-                              onClick={() => handleOnIncrease(item._id)}
-                            />
+
+                            {!isOrderPage && (
+                              <FiChevronRight
+                                onClick={() => handleOnIncrease(item._id)}
+                              />
+                            )}
                           </div>
                         </Table.Cell>
                         <Table.Cell>
                           ${item.cartQty * item.salesPrice}
                         </Table.Cell>
-                        <Table.Cell>
-                          <Button onClick={() => handleOnDelete(item._id)}>
-                            Delete
-                          </Button>
-                        </Table.Cell>
+                        {!isOrderPage && (
+                          <Table.Cell>
+                            <Button onClick={() => handleOnDelete(item._id)}>
+                              Delete
+                            </Button>
+                          </Table.Cell>
+                        )}
                       </Table.Row>
                     );
                   })}
@@ -187,20 +209,25 @@ const CartTable = () => {
                     {/* <Table.Cell></Table.Cell>  */}
                   </Table.Row>
 
-                  <Table.Row>
-                    <Table.Cell
-                      colSpan={4}
-                      className='text-right'
-                    >
-                      {client._id ? (
-                        <Button> Proceed To Checkout</Button>
-                      ) : (
-                        <Button>
-                          <Link to='/login'>Login To Checkout</Link>
-                        </Button>
-                      )}
-                    </Table.Cell>
-                  </Table.Row>
+                  {!isOrderPage && (
+                    <Table.Row>
+                      <Table.Cell
+                        colSpan={4}
+                        className='text-right'
+                      >
+                        {client._id ? (
+                          <Button onClick={handleOnProceed}>
+                            {" "}
+                            Proceed To Checkout
+                          </Button>
+                        ) : (
+                          <Button>
+                            <Link to='/login'>Login To Checkout</Link>
+                          </Button>
+                        )}
+                      </Table.Cell>
+                    </Table.Row>
+                  )}
                 </Table.Body>
               </Table>
             </div>

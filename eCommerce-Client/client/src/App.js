@@ -15,6 +15,8 @@ import { fetchAllProduct } from "./pages/product/ProductAction";
 import { fetchAllCategories } from "./pages/category/CatAction";
 import Cart from "./pages/cart/Cart";
 import { getClientUserInfo } from "./pages/user/UserAction";
+import Order from "./pages/order/Order";
+import ShippingForm from "./components/form/ShippingForm";
 
 function App() {
   const dispatch = useDispatch();
@@ -54,8 +56,16 @@ function App() {
           element={<Cart />}
         />
         <Route
-          path='product'
+          path='/order'
+          element={<Order />}
+        />
+        <Route
+          path='/product'
           element={<Product />}
+        />
+        <Route
+          path='/shipping'
+          element={<ShippingForm />}
         />
       </Routes>
       <ToastContainer />

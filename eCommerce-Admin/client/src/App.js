@@ -27,22 +27,27 @@ import AdminVerification from "./pages/registration-login/AdminVerification";
 function App() {
   const dispatch = useDispatch();
 
-
   //fetch anything you need in the multipl places of the app
   useEffect(() => {
-
     dispatch(fetchAllCategoryAction());
     dispatch(fetchAllProductAction());
   }, []);
+  
   return (
-    <div className="">
+    <div className=''>
       <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/admin-verification" element={<AdminVerification />} />
+        <Route
+          path='/'
+          element={<Login />}
+        />
+        <Route
+          path='/admin-verification'
+          element={<AdminVerification />}
+        />
 
         {/* // private routes  */}
         <Route
-          path="/registration"
+          path='/registration'
           element={
             // <PrivateRoute>
             <Register />
@@ -50,7 +55,7 @@ function App() {
           }
         />
         <Route
-          path="/dashboard"
+          path='/dashboard'
           element={
             <PrivateRoute>
               <Dashboard />
@@ -58,7 +63,7 @@ function App() {
           }
         />
         <Route
-          path="/categories"
+          path='/categories'
           element={
             <PrivateRoute>
               <Category />
@@ -66,7 +71,7 @@ function App() {
           }
         />
         <Route
-          path="/products"
+          path='/products'
           element={
             <PrivateRoute>
               <Products />
@@ -74,7 +79,7 @@ function App() {
           }
         />
         <Route
-          path="/product/new"
+          path='/product/new'
           element={
             <PrivateRoute>
               <AddProduct />
@@ -82,7 +87,7 @@ function App() {
           }
         />
         <Route
-          path="/payment-options"
+          path='/payment-options'
           element={
             <PrivateRoute>
               <PaymentOptions />
@@ -90,7 +95,7 @@ function App() {
           }
         />
         <Route
-          path="/orders"
+          path='/orders'
           element={
             <PrivateRoute>
               <Orders />
@@ -98,7 +103,7 @@ function App() {
           }
         />
         <Route
-          path="/buyers"
+          path='/buyers'
           element={
             <PrivateRoute>
               <Buyers />
@@ -106,7 +111,7 @@ function App() {
           }
         />
         <Route
-          path="/reviews"
+          path='/reviews'
           element={
             <PrivateRoute>
               <Reviews />
@@ -114,7 +119,7 @@ function App() {
           }
         />
         <Route
-          path="/admin"
+          path='/admin'
           element={
             <PrivateRoute>
               <Admin />
@@ -122,7 +127,7 @@ function App() {
           }
         />
         <Route
-          path="/profile"
+          path='/profile'
           element={
             <PrivateRoute>
               <Profile />

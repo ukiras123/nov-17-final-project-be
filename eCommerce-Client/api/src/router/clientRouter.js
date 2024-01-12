@@ -19,7 +19,7 @@ clientRouter.get("/get-accessjwt", refreshAuth);
 // login
 clientRouter.post("/login", loginClient);
 // get client details using access
-clientRouter.get("/", auth, getClientInfo);
+clientRouter.get("/", getClientInfo);
 // logout
 clientRouter.post("/logout", logOutClient);
 // reset passwords

@@ -8,13 +8,13 @@ export const InputField = [
     name: "email", // eslint-disable-next-line
     type: "email", // eslint-disable-next-line
     label: "Email", // eslint-disable-next-line
-    require, // eslint-disable-next-line
+    required: true, // eslint-disable-next-line
   }, // eslint-disable-next-line
   {
     name: "password", // eslint-disable-next-line
     type: "password", // eslint-disable-next-line
     label: "Password", // eslint-disable-next-line
-    require, // eslint-disable-next-line
+    required: true, // eslint-disable-next-line
   },
 ];
 // eslint-disable-next-line
@@ -23,5 +23,3 @@ export const isCheckQty = (cartQty) => {
   alert("we run out of Stock! Check later, thank you! "); // eslint-disable-next-line
   return cartQty; // eslint-disable-next-line
 }; // eslint-disable-next-line
-// eslint-disable-next-line
-// eslint-disable-next-line
