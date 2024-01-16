@@ -1,9 +1,18 @@
 FROM node:18.19.0-slim
 
-#Set a working directory in the container 
-WORKDIR /usr/src/app/adminApi
+# Set a working directory in the container
+WORKDIR /usr/src/app
 
-#Copy package file from current directory to /usr/src/app/adminapi
+# Copy package file from current directory to /usr/src/app
 COPY package*.json ./
 
-#C
+# Install dependencies
+RUN npm install
+
+# Copy the application code from current directory to /usr/src/app
+COPY . .
+
+EXPOSE 3000
+
+CMD [ "npm", "start" ]
+
