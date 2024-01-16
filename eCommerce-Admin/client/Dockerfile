@@ -12,7 +12,9 @@ RUN npm install
 # Copy the application code from current directory to /usr/src/app
 COPY . .
 
-EXPOSE 3000
+RUN npm run build
 
-CMD [ "npm", "start" ]
+EXPOSE 4000
+
+CMD [ "npm", "run", "server" ]
 
