@@ -13,26 +13,25 @@ import Buyers from "./pages/buyer/Buyers";
 import Reviews from "./pages/review/Reviews";
 import Admin from "./pages/admin/Admin";
 import Profile from "./pages/profile/Profile";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "./config/firebase-config";
-import { useDispatch } from "react-redux";
-import { getUserProfile } from "./pages/registration-login/userAction";
+// import { onAuthStateChanged } from "firebase/auth";
+// import { auth } from "./config/firebase-config";
+import { useDispatch, useSelector } from "react-redux";
 import { PrivateRoute } from "./components/private-route/PrivateRoute";
 import AddProduct from "./pages/products/AddProduct";
 import { useEffect } from "react";
-import { fetchAllCategoryAction } from "./pages/category/catAction";
-import { fetchAllProductAction } from "./pages/products/productAction";
 import AdminVerification from "./pages/registration-login/AdminVerification";
 
 function App() {
   const dispatch = useDispatch();
 
+  const { user } = useSelector((state) => state.adminInfo);
+  // console.log({ user });
   //fetch anything you need in the multipl places of the app
   useEffect(() => {
-    dispatch(fetchAllCategoryAction());
-    dispatch(fetchAllProductAction());
+    // getAdminUserInfo() && dispatch(fetchAllCategoryAction());
+    // getAdminUserInfo() && dispatch(fetchAllProductAction());
   }, []);
-  
+
   return (
     <div className=''>
       <Routes>

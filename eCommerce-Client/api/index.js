@@ -15,7 +15,7 @@ const { reviewRouter } = require("./src/router/reviewRouter");
 const { orderRouter } = require("./src/router/orderRouter");
 const { paymentMethodRouter } = require("./src/router/paymentMethodRouter");
 
-const PORT = process.env.PORT || 3005;
+const PORT = process.env.PORT || 4000;
 
 app.use("/api/v1/client", clientRouter);
 app.use("/api/v1/category", categoryRouter);

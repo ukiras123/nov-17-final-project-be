@@ -100,6 +100,7 @@ export const verifyUser = (data) => {
 
 
 export const apiGetCategories = () => {
+    
     return axiosProcessor({
         method: "get",
         url: `${BASE_URL}/category`,
