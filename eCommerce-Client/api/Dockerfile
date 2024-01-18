@@ -23,6 +23,8 @@ RUN npm install
 
 COPY . . 
 
+EXPOSE 4000
+
 ## after copying all the files time to run server 
 CMD [ "npm", "start" ]
 
