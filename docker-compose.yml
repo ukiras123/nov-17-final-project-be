@@ -1,0 +1,68 @@
+# docker-compose up -d
+# docker-compose down
+# docker run --name my-mongodb -d --network=ecommerce-network -p 27105:27017 -v /Users/kiran/Desktop/docker-vol:/data/db mongo
+# To build and image and push to repo
+# docker login
+# Create a repo
+# docker build ukiras123/reponame .
+# docker push ukiras123/reponame
+version: "3"
+services:
+  my-mongodb:
+    image: mongo:latest
+    volumes:
+      - app_data:/data/db
+    ports:
+      - "27105:27017"
+    networks:
+      - app_network
+  admin-fe:
+    build:
+      context: ./eCommerce-Admin/client
+    ports:
+      - "4001:4000"
+    networks:
+      - app_network
+    environment:
+      - REACT_APP_API_URL=http://localhost:3001
+  admin-api:
+    build:
+      context: ./eCommerce-Admin/api
+    ports:
+      - "3001:3000"
+    networks:
+      - app_network
+    volumes:
+      - app_api_data:/usr/src/app/public/product/images
+    depends_on:
+      - my-mongodb
+    environment:
+      - DB_URL=mongodb://my-mongodb:27017/final_project
+  client-fe:
+    build:
+      context: ./eCommerce-Client/client
+    ports:
+      - "4002:4001"
+    networks:
+      - app_network
+    environment:
+      - REACT_APP_API_URL=http://localhost:3002
+      - REACT_APP_ADMIN_API_URL=http://localhost:3001
+  client-api:
+    build:
+      context: ./eCommerce-Client/api
+    ports:
+      - "3002:4000"
+    networks:
+      - app_network
+    depends_on:
+      - my-mongodb
+    environment:
+      - DB_URL=mongodb://my-mongodb:27017/final_project
+
+volumes:
+  app_data:
+  app_api_data:
+
+networks:
+  app_network:
