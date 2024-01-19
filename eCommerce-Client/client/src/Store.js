@@ -30,5 +30,6 @@ const store = configureStore({
   reducer: persistedReducer,
 });
 
+// This is small
 export default store;
 export const persistor = persistStore(store);
