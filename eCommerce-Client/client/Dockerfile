@@ -1,7 +1,7 @@
 FROM node:18.19.0-slim
 
 # Set a working directory in the container
-WORKDIR /usr/fe/app
+WORKDIR /usr/src/app
 
 # Copy package file from current directory to /usr/src/app
 COPY package*.json ./
